@@ -4,10 +4,8 @@ import pandas as pd
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from dotenv import load_dotenv
-import os
-load_dotenv()
-API_KEY = os.getenv("TMDB_API_KEY")
+
+API_KEY = st.secrets["TMDB_API_KEY"]
 
 session = requests.Session()
 retry = Retry(
