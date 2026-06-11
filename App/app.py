@@ -49,10 +49,10 @@ def recommend(movie):
         recommended_movies_posters.append(fetch_poster(movie_id)) # Fetch poster from API
     return recommended_movies,recommended_movies_posters
 
-movies_dict = pickle.load(open("../movies_dictionary.pkl","rb"))
+movies_dict = pickle.load(open("movies_dictionary.pkl","rb"))
 movies = pd.DataFrame(movies_dict)
 
-vectors = pickle.load(open("../vectors.pkl","rb"))
+vectors = pickle.load(open("vectors.pkl","rb"))
 
 @st.cache_resource
 def load_similarity():
