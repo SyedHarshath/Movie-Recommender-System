@@ -49,10 +49,21 @@ def recommend(movie):
         recommended_movies_posters.append(fetch_poster(movie_id)) # Fetch poster from API
     return recommended_movies,recommended_movies_posters
 
-movies_dict = pickle.load(open(r"D:\Workspace\Projects\Movie Recommender System\movies_dictionary.pkl","rb"))
+movies_dict = pickle.load(open("../movies_dictionary.pkl","rb"))
 movies = pd.DataFrame(movies_dict)
 
-similarity = pickle.load(open(r"D:\Workspace\Projects\Movie Recommender System\similarity.pkl","rb"))
+vectors = pickle.load(open("../vectors.pkl","rb"))
+
+@st.cache_resource
+def load_similarity():
+    from sklearn.metrics.pairwise import cosine_similarity
+    from sklearn.feature_extraction.text import CountVectorizer
+    cv = CountVectorizer(max_features=5000,stop_words='english')
+    similarity_vectors = cv.fit_transform(movies['tags'])
+    similarity = cosine_similarity(similarity_vectors)
+    return similarity
+
+similarity = load_similarity()
 
 st.title("Movie Recommender System")
 
